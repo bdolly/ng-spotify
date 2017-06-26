@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AppSettings} from '../app.settings';
 
 @Component({
   selector: 'navbar-top',
@@ -10,7 +11,7 @@ export class NavbarTopComponent implements OnInit {
 	private projectName:string;
 
   constructor() { 
-  	this.projectName = 'ngSpotify';
+  	this.projectName = AppSettings.APP.NAME;
   }
 
   ngOnInit() {

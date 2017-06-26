@@ -6,7 +6,12 @@
 <form action="">
 	<div class="form-group">
 		<input 
+			class="form-control"
 			type="text"
-			placeholder="Search Music" >
+			name="music-search"
+			placeholder="Search Music" 
+			(keyup)="searchMusic()"
+			[(ngModel)]="searchStr">
+
 	</div>
 </form>
