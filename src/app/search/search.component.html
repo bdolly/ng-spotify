@@ -1,6 +1,6 @@
 <h1>Need Music?</h1>
 <p class="lead">
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+	Use the ngSpotify app to browse new releases and find your favorite songs.
 </p>
 
 <form action="">
@@ -15,3 +15,23 @@
 
 	</div>
 </form>
+
+
+<div *ngIf="searchRes">
+
+	<div *ngFor="let res of searchRes">
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="searchRes well">
+					<h4>{{res.name}}</h4>
+					<div>
+						<strong>Genres:</strong>
+						<span *ngFor="let genre of res.genres">{{genre}} </span>
+					</div>
+
+				</div>
+			</div>		
+		</div>
+	</div>
+</div>
