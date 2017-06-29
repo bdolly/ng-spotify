@@ -1,7 +1,7 @@
 import {Album} from './Album';
 
 export class Artist {
-	id:    number;
+	id:    string;
 	name:  string;
 	genres: any;
 	albums: Album[]

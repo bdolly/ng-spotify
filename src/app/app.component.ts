@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NavbarTopComponent} from './navbar-top/navbar-top.component';
+import {SpotifyAuthService} from './services/spotify-auth.service'; 
 
 
 @Component({
@@ -7,6 +8,10 @@ import {NavbarTopComponent} from './navbar-top/navbar-top.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
+
+export class AppComponent implements OnInit{
+	constructor(private auth: SpotifyAuthService){}
+	ngOnInit(){
+		this.auth.login();
+	}
 }

@@ -1,4 +1,4 @@
-import {AppSettings} from '../app.settings';
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -9,12 +9,14 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class SpotifyAuthService {
 
+  public accessToken:string;
 	private searchUrl:string;
-	private accessToken:string;
-	private SPOTIFY_API = AppSettings.SPOTIFY_API;
+	private SPOTIFY_API = environment.SPOTIFY_API;
 
 	
   constructor(private _http:Http) {   }
+
+
 
   /**
    * Login using the Spotify API Client Credentials Flow 
@@ -22,29 +24,13 @@ export class SpotifyAuthService {
    */
   login():void{
 
-  	if(!window.location.href.includes('access_token')){
+  	if(!window.location.href.includes('access_token') && !this.getAccessToken()){
   		let spotifyLoginWindow = window.location.href = this.getLoginURL();
   	}
+
+    window.addEventListener("message", (event)=>{ this.setAccessToken(); }, false);
   	
 
-
-		window.addEventListener("message", (event)=>{
-			if(window.location.href.includes('access_token')){
-				let hashBreakUrl = location.href.split('#');
-      	let url_params = hashBreakUrl[1]
-      										.split('&')
-      										.reduce((params, param) => {
-    											  let [ key, value ] = param.split('=');
-    											  params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
-    											  return params;
-    											}, { });
-
-         this.accessToken = url_params['access_token'];
-
-			}
-      
-
-        }, false);
   }
 
 
@@ -63,13 +49,31 @@ export class SpotifyAuthService {
   * Utility mehtod to get the access token if set 
   * @return {string} access_token hash 
   */
- getAccessToken():string|null{
- 	if(this.accessToken !== ""){
- 		return this.accessToken;
- 	}else{
- 		new Error('No Access token - no logged in');
- 		return null;
- 	}
+ getAccessToken(){
+   let storedToken = window.localStorage.getItem('ngSpotify-accessToken');
+   if(storedToken){
+     return storedToken;
+   }else{
+     new Error('No Spotify Access Token Set');
+     return null;
+   }
+ }
+
+
+
+ setAccessToken(){
+   if(window.location.href.includes('access_token')){
+      let hashBreakUrl = location.href.split('#');
+       let url_params = hashBreakUrl[1]
+                          .split('&')
+                          .reduce((params, param) => {
+                            let [ key, value ] = param.split('=');
+                            params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+                            return params;
+                          }, { });
+
+        window.localStorage.setItem('ngSpotify-accessToken', url_params['access_token']);
+    }
  }
 
 

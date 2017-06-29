@@ -13,6 +13,7 @@ import {SpotifyAuthService} from './services/spotify-auth.service';
 
 
 import { HttpModule } from '@angular/http';
+import { ArtistComponent } from './artist/artist.component';
 
 
 const appRoutes: Routes = [
@@ -21,6 +22,10 @@ const appRoutes: Routes = [
   },
   { path: 'about', 
   	component: AboutComponent 
+  },
+  {
+    path: 'artist/:id',
+    component: ArtistComponent
   }
 ];
 
@@ -29,7 +34,8 @@ const appRoutes: Routes = [
     AppComponent,
     NavbarTopComponent,
     AboutComponent,
-    SearchComponent
+    SearchComponent,
+    ArtistComponent
   ],
   imports: [
   	RouterModule.forRoot(appRoutes),
