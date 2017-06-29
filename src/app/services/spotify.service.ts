@@ -13,7 +13,10 @@ import {SpotifyAuthService} from './spotify-auth.service';
 export class SpotifyService {
 
   private searchUrl:string;
-	private artistUrl:string;
+  private artistUrl:string;
+	private artistAlbumsUrl:string;
+  private albumUrl:string;
+  
 	private accessToken:string;
 
 	
@@ -57,6 +60,27 @@ export class SpotifyService {
     this.artistUrl = `${environment.SPOTIFY_API.BASE}/artists/${id}`;
 
     return this._http.get(this.artistUrl, this.authHeader()).map(res =>res.json());
+  }
+
+  /**
+   * Get all albums for Artist 
+   * @param  {string}          artistId ID of the artist to get albums for 
+   * @return {Observable<any>}          
+   */
+  getAlbums(artistId:string):Observable<any>{
+    this.artistAlbumsUrl = `${environment.SPOTIFY_API.BASE}/artists/${artistId}/albums`;
+
+    return this._http.get(this.artistAlbumsUrl, this.authHeader()).map(res =>res.json());
+
+  }
+
+
+  
+  getAlbum(albumId:string):Observable<any>{
+    this.artistAlbumsUrl = `${environment.SPOTIFY_API.BASE}/albums/${albumId}`;
+
+    return this._http.get(this.albumUrl, this.authHeader()).map(res =>res.json());
+
   }
 
   

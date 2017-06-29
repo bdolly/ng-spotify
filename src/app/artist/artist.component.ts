@@ -25,10 +25,15 @@ export class ArtistComponent implements OnInit {
 
 
   ngOnInit():void {
-    
+    // get the artist
     this._route.params
       .switchMap((params: Params) => this._spotifyService.getArtist(params['id']))
       .subscribe(artist =>this.artist = artist );  	
+
+    // get the artist albums
+    this._route.params
+      .switchMap((params: Params) => this._spotifyService.getAlbums(params['id']))
+      .subscribe(albums =>{ this.albums = albums.items; } );    
 
   }
 
