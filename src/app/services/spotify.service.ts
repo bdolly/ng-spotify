@@ -68,7 +68,7 @@ export class SpotifyService {
    * @return {Observable<any>}          
    */
   getAlbums(artistId:string):Observable<any>{
-    this.artistAlbumsUrl = `${environment.SPOTIFY_API.BASE}/artists/${artistId}/albums`;
+    this.artistAlbumsUrl = `${environment.SPOTIFY_API.BASE}/artists/${artistId}/albums?market=us`;
 
     return this._http.get(this.artistAlbumsUrl, this.authHeader()).map(res =>res.json());
 
@@ -77,7 +77,7 @@ export class SpotifyService {
 
   
   getAlbum(albumId:string):Observable<any>{
-    this.artistAlbumsUrl = `${environment.SPOTIFY_API.BASE}/albums/${albumId}`;
+    this.albumUrl = `${environment.SPOTIFY_API.BASE}/albums/${albumId}`;
 
     return this._http.get(this.albumUrl, this.authHeader()).map(res =>res.json());
 
